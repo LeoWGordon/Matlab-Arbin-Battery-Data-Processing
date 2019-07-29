@@ -17,7 +17,7 @@ channel = inputdlg('Input Channel Number','Channel Number');
 sheet1 = strcat('Channel_',string(channel),'_1');
 sheet2 = strcat('Statistics_',string(channel)); % Choose Statistics Sheet
 
-current_density = inputdlg('Enter Current Density','Current Density'); % mA/g
+current_density = inputdlg('Enter Current Density (mA/g)','Current Density'); % mA/g
 current_density_num = str2double(current_density);
 
 cyc_num = inputdlg({'1st Cycle to Plot', '2nd Cycle to Plot', '3rd Cycle to Plot'},'Choose 3 Cycles to Plot');
@@ -115,7 +115,7 @@ Gc = findgroups(Nc); % Segregates Cycles
 Cn = b(:,5); % Cycle Number
 Cd = (b(:,9))./m; % Discharge Capacity (mAh/g)
 Cc = (b(:,8))./m; % Charge Capacity (mAh/g)
-E = Cd./Cc*100; % Discharge over charge = efficiency
+E = Cc./Cd*100; % Charge over discharge = efficiency (ions out/ions in)
 
 %% Plotting Data
 
@@ -164,7 +164,6 @@ scatter(Cn,E,'filled')
 title('Coulombic Efficiency','fontsize',18)
 xlabel('Cycle Number','fontsize',16)
 ylabel('Coulombic Efficiency (%)','fontsize',16)
-axis([0 inf 0 105])
 legend('Discharge Capacity','Charge Capacity','Coulombic Efficiency','fontsize',16,'location','southeast')
 
 
