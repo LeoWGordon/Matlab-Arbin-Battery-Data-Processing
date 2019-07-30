@@ -1,5 +1,5 @@
 # Matlab-Arbin-Battery-Data-Processing
-Generate plots of: all cycles, specific cycles, and Coulombic efficiency/capacity per cycle. Code runs through Matlab, definitively on versions starting 2018.
+Generate plots of: all cycles, specific cycles, and Coulombic efficiency/capacity per cycle. Code runs through Matlab, definitively on the 2018 version. On the 2019 version, the indexing is different from the xlsread function.
 
 User inputs of filepath, channel number (found in default filepath typically), and current density (for calculation of specific gravimetric capacity) are required for the code to run correctly. These inputs are promted through dialogue boxes.
 
