@@ -123,7 +123,7 @@ E = Cc./Cd*100; % Charge over discharge = efficiency (ions out/ions in)
 % Voltage vs. Capacity
 figure (1)
 
-plot(ds1,Vd1,cs1,Vc1,ds2,Vd2,cs2,Vc2,ds3,Vd3,cs3,Vc3,'LineWidth',1);
+plot(ds1,Vd1,'-b',cs1,Vc1,'-b',ds2,Vd2,'-r',cs2,Vc2,'-r',ds3,Vd3,'-g',cs3,Vc3,'-g','LineWidth',1);
 leg1 = strcat('Cycle',{' '},string(cc1));
 leg2 = strcat('Cycle',{' '},string(cc2));
 leg3 = strcat('Cycle',{' '},string(cc3));
