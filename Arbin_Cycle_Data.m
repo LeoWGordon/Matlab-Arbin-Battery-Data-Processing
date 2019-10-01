@@ -1,5 +1,8 @@
-%% Code for Giving Graphs of Cycling Performance, and Coulombic Efficiency with Charge/Discharge Capacity
-% All graphs should save automatically into the folder
+%% Code for Processing Arbin Galvanostatic Cycling Data
+% Gives graphs of cycling performance, and Coulombic efficiency with charge/discharge capacity
+% All graphs should save automatically into the folder specific by variable
+% savelocation.
+% Code prepared by Leo W. Gordon
 
 clear all; 
 clc;
@@ -9,23 +12,28 @@ close all;
 % Ensure code saves in the same folder as the excel file
 % Input file name, and change number on the sheet names 
 % (should be in the file name typically)
- 
-file = inputdlg('Enter File Name','File Name');
-filename = string(file);
 
-channel = inputdlg('Input Channel Number','Channel Number');
+valuestr = inputdlg({'Enter File Name','Enter Channel Number','Enter Current Density (mA/g)'},'Input Values'); 
+
+filename = string(valuestr(1,:));
+channel = valuestr(2,:);
+current_density_num = str2double(valuestr(3,:));
+
 sheet1 = strcat('Channel_',string(channel),'_1');
 sheet2 = strcat('Statistics_',string(channel)); % Choose Statistics Sheet
-
-current_density = inputdlg('Enter Current Density (mA/g)','Current Density'); % mA/g
-current_density_num = str2double(current_density);
 
 cyc_num = inputdlg({'1st Cycle to Plot', '2nd Cycle to Plot', '3rd Cycle to Plot'},'Choose 3 Cycles to Plot');
 Cycle_Number = str2double(cyc_num);
 
 % Read Sheets and Obtain Variables
-[a] = xlsread(filename,sheet1);
-[b] = xlsread(filename,sheet2);
+
+% For Matlab 2018 and before:
+% [a] = xlsread(filename,sheet1);
+% [b] = xlsread(filename,sheet2);
+
+% For Matlab 2019 and after:
+a = readmatrix(filename,'Sheet',sheet1);
+b = readmatrix(filename,'Sheet',sheet2);
 
 %% Determine Mass of Active Material
 
@@ -122,25 +130,54 @@ E = Cc./Cd*100; % Charge over discharge = efficiency (ions out/ions in)
 % Voltage vs. Capacity
 figure (1)
 
-plot(ds1,Vd1,'-b',cs1,Vc1,'-b',ds2,Vd2,'-r',cs2,Vc2,'-r',ds3,Vd3,'-g',cs3,Vc3,'-g','LineWidth',1);
 leg1 = strcat('Cycle',{' '},string(cc1));
 leg2 = strcat('Cycle',{' '},string(cc2));
 leg3 = strcat('Cycle',{' '},string(cc3));
-legend(leg1,leg1,leg2,leg2,leg3,leg3,'fontsize',16,'location','best');
-title('Battery Cycling Data','fontsize',18);
-xlabel('Capacity (mAhg^{-1})','fontsize',16);
+
+p1 = plot(ds1,Vd1,'-b',ds2,Vd2,'-r',ds3,Vd3,'-g','LineWidth',2);
+
+%legend(leg1,leg2,leg3,'fontsize',16,'location','best');
+
+hold on
+
+p2 = plot(cs1,Vc1,'-b',cs2,Vc2,'-r',cs3,Vc3,'-g','LineWidth',2);
+
+legend([p1],{leg1,leg2,leg3},'fontsize',16,'location','best');
+
+%legend(leg1,leg2,leg3,'fontsize',16,'location','best');
+
+legend box 'off'
+%set(get(get(p2,'Annotation'),'LegendInformation'),'IconDisplayStyle','off')
+%title('Battery Cycling Data','fontsize',18);
+xlabel('Specific Capacity (mAhg^{-1})','fontsize',16);
 ylabel('Voltage (V)','fontsize',16);
+
+box on
+ax = gca;
+size = ax.FontSize;
+ax.FontSize = 18;
+weight = ax.FontWeight;
+ax.FontWeight = 'bold';
+ax.LineWidth = 2;
 
 figure(2)
 gscatter(dn,Vd,Gd);
 hold on
 gscatter(cn,Vc,Gc);
-title('Battery Cycling Data','fontsize',18);
+%title('Battery Cycling Data','fontsize',18);
 xlabel('Capacity (mAhg^{-1})','fontsize',16);
 ylabel('Voltage (V)','fontsize',16);
 leg = legend('show');
 title(leg,'Cycle Number');
 set(legend, 'NumColumns' ,2);
+
+box on
+ax = gca;
+size = ax.FontSize;
+ax.FontSize = 18;
+weight = ax.FontWeight;
+ax.FontWeight = 'bold';
+ax.LineWidth = 2;
 
 % Coulombic Efficiency and Capacity as a Function of Cycle Number
 % Plotted on the same graph
@@ -154,29 +191,56 @@ figure(3)
 yyaxis left
 
 plot(Cn,Cd,'ko',Cn,Cc,'ro')
-title('Capacity and Coulombic Efficiency','fontsize',18)
+%title('Capacity and Coulombic Efficiency','fontsize',18)
 xlabel('Cycle Number','fontsize',16)
 ylabel('Capacity (mAhg^{-1})','fontsize',16)
+axis([0 inf 0 250])
+
+box on
+ax = gca;
+size = ax.FontSize;
+ax.FontSize = 18;
+weight = ax.FontWeight;
+ax.FontWeight = 'bold';
+ax.LineWidth = 2;
 
 yyaxis right
 
 scatter(Cn,E,'filled')
-title('Coulombic Efficiency','fontsize',18)
+%title('Coulombic Efficiency and Cycle Life','fontsize',18)
 xlabel('Cycle Number','fontsize',16)
 ylabel('Coulombic Efficiency (%)','fontsize',16)
+axis([0 inf 0 160])
 legend('Discharge Capacity','Charge Capacity','Coulombic Efficiency','fontsize',16,'location','southeast')
 
+box on
+ax = gca;
+size = ax.FontSize;
+ax.FontSize = 18;
+weight = ax.FontWeight;
+ax.FontWeight = 'bold';
+ax.LineWidth = 2;
 
-grid on
-grid minor
+%grid on
+%grid minor
 
 %% Save Files
 
+fileminustext = erase(filename,'.xlsx'); % Removes the .xlsx from the filename string for figure names without extra full stops
+
+name1 = strcat(fileminustext,'_Cycling_Performance_Select.pdf');
+name2 = strcat(fileminustext,'_Cycling_Performance_Full.pdf');
+name3 = strcat(fileminustext,'_Statistics.pdf');
+savelocation = '/Users/lgordon/Documents/All Figures/'; % change to desired save location
+
 orient(figure(1),'landscape')
-print('-f1',strcat(filename,'.Cycling_Performance_Select.pdf'),'-dpdf','-bestfit')
+print('-f1',name1,'-dpdf','-bestfit')
+    movefile(name1,savelocation);
 
 orient(figure(2),'landscape')
-print('-f2',strcat(filename,'.Cycling_Performance_Full.pdf'),'-dpdf','-bestfit')
+print('-f2',name2,'-dpdf','-bestfit')
+    movefile(name2,savelocation);
 
 orient(figure(3),'landscape')
-print('-f3',strcat(filename,'.Statistics.pdf'),'-dpdf','-bestfit')
+print('-f3',name3,'-dpdf','-bestfit')
+    movefile(name3,savelocation);
