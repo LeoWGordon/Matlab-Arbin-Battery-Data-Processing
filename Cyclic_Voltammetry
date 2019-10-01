@@ -8,10 +8,9 @@ clc;
 close all;
 clear all;
 
-valuestr = inputdlg({'Enter File Name','Enter Total Number of Cycles','Enter Scan Rate (µV/s)'},'Input Values'); 
+valuestr = inputdlg({'Enter File Name','Enter Scan Rate (µV/s)'},'Input Values'); 
 
 filename = string(valuestr(1,:));
-num_cycles = str2double(valuestr(2,:));
 rate = str2double(valuestr(3,:));
 
 a = readtable(filename);
@@ -20,7 +19,7 @@ M = table2array(a);
 area = pi*0.3^2;
 
 cn = M(:,11);
-
+num_cycles = max(cn);
 n = num_cycles;
 
 for i=(1:1:n)
@@ -38,7 +37,8 @@ hold off
 xlabel('Voltage (V)','fontsize',20,'FontWeight','bold')
 ylabel('Current Density (mA cm^{-2})','fontsize',20,'FontWeight','bold')
 legend show
-legend('location','northwest')
+legend('fontsize',16,'location','northwest')
+legend box 'off'
 %grid on
 %grid minor
 box on
@@ -50,7 +50,7 @@ ax.FontWeight = 'bold';
 ax.LineWidth = 2;
 
 shortfilename = erase(filename,'.txt'); % remove .txt from the filename
-name = strcat(shortfilename,' CV');
+name = strcat(shortfilename,'_CV.pdf');
 savelocation = '/Users/lgordon/Documents/All Figures/'; % change to desired save location
 
 orient(figure(1),'landscape')
