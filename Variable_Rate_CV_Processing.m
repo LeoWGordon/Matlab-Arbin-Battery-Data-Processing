@@ -11,17 +11,7 @@ clear all;
 valuestr = inputdlg({'Enter File Name','Enter Number of Cycles per Rate'},'Input Values'); 
 
 filename = string(valuestr(1,:));
-%num_cycles = str2double(valuestr(2,:));
 f = str2double(valuestr(2,:));
-
-% file = inputdlg('Enter File Name','File Name');
-% filename = string(file);
-
-% no_cycles = inputdlg('Enter Total Number of Cycles','Number of Cycles');
-% num_cycles = str2double(no_cycles);
-
-% cycles_per = inputdlg('Enter Number of Cycles per Rate','Number of Cycles per Rate');
-% f = str2double(cycles_per);
 
 a = readtable(filename);
 M = table2array(a);
