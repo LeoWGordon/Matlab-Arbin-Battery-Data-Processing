@@ -1,4 +1,4 @@
-% Arbin Variable Rate Cycling Data
+%% Arbin Variable Rate Cycling Data
 % Gives graphs of the last cycle for every rate, and gives graph of
 % charge/discharge capacity and coulombic efficiency vs. cycle number
 % Code prepared by Leo W. Gordon
