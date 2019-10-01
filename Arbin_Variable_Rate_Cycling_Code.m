@@ -1,3 +1,8 @@
+% Arbin Variable Rate Cycling Data
+% Gives graphs of the last cycle for every rate, and gives graph of
+% charge/discharge capacity and coulombic efficiency vs. cycle number
+% Code prepared by Leo W. Gordon
+
 clear all; 
 clc;
 close all;
@@ -23,13 +28,14 @@ mass = massmg/1000;
 P = values(4,:); % For loop step size, e.g. number of cycles per rate
 
 %% Read Sheets and Obtain Variables in 2018 and before
-[a] = xlsread(filename,sheet1);
-[b] = xlsread(filename,sheet2);
+
+% [a] = xlsread(filename,sheet1);
+% [b] = xlsread(filename,sheet2);
 
 %% For matlab 2019 use these readmatrix commands instead
 
-%a = readmatrix(filename,'Sheet',sheet1);
-%b = readmatrix(filename,'Sheet',sheet2);
+a = readmatrix(filename,'Sheet',sheet1);
+b = readmatrix(filename,'Sheet',sheet2);
 
 %% For loop to plot specific cycles at ramping step indices
 
@@ -45,7 +51,7 @@ m = (((n-1)/10)+1)*5-3; % Step number corresponding to discharge
 ccc = a(:,5);
 si = a(:,4);
 
-    for i = (10:P:n) % Finds 10th cycle of each rate - could change the 10 to use a different cycle in the section
+    for i = (P:P:n) % Finds 10th cycle of each rate - could change the 10 to use a different cycle in the section
     % Can remove the dialogue entry if a set number used every time -
     % replace second number for the intervals
     
@@ -68,7 +74,7 @@ si = a(:,4);
         p1 = plot(dischargecap,dischargevoltage,'color',c(i,:),'DisplayName',txt,'linewidth',2);
         hold on
         p2 = plot(chargecap,chargevoltage,'color',c(i,:),'linewidth',2);
-        title('Variable Rate Cycle Data','fontsize',24);
+        %title('Variable Rate Cycle Data','fontsize',24);
         xlabel('Specific Capacity (mA h g^{-1})','fontsize',20,'FontWeight','bold');
         ylabel('Cell Voltage (V)','fontsize',20,'FontWeight','bold');
     
@@ -120,9 +126,10 @@ hold on
 scatter(cycnum,Cc,75,'ro');
 
 
-title('Capacity and Coulombic Efficiency','fontsize',24)
+%title('Capacity and Coulombic Efficiency','fontsize',24)
 xlabel('Cycle Number','fontsize',20,'FontWeight','bold')
 ylabel('Specific Capacity (mA h g^{-1})','fontsize',20,'FontWeight','bold')
+%axis([0 inf 0 1000]) % Can add if there is a massive outlier which would give a zoomed out graph
 box on
 ax = gca;
 size = ax.FontSize;
@@ -134,10 +141,10 @@ ax.LineWidth = 2;
 yyaxis right
 
 scatter(cycnum,E,100,'filled');
-title('Coulombic Efficiency and Cycle Life','fontsize',24)
+%title('Coulombic Efficiency and Cycle Life','fontsize',24)
 xlabel('Cycle Number','fontsize',20,'FontWeight','bold')
 ylabel('Coulombic Efficiency (%)','fontsize',20,'FontWeight','bold')
-axis([0 inf 0 120])
+axis([0 inf 0 120]) % Can change accordingly to data
 
 ax = gca;
 size = ax.FontSize;
@@ -158,8 +165,13 @@ hold off
 
 fileminustext = erase(filename,'.xlsx'); % Removes the .xlsx from the filename string for figure names without extra full stops
 
+name1 = strcat(fileminustext,'_Cycling_Performance_Select.pdf');
+name2 = strcat(fileminustext,'_Statistics.pdf');
+savelocation = '/Users/lgordon/Documents/All Figures/'; % change to desired save location
+
 orient(figure(2),'landscape')
-print('-f2',strcat(fileminustext,'_Statistics.pdf'),'-dpdf','-bestfit')
+print('-f2',name2,'-dpdf','-bestfit')
+        movefile(name2,savelocation); 
 
 %% Saving Cycling Performance Graph
 
@@ -169,4 +181,5 @@ fig_pos = fig.PaperPosition;
 fig.PaperSize = [fig_pos(3) fig_pos(4)];
 
 orient(figure(1),'landscape')
-print('-f1',strcat(fileminustext,'_Cycling_Performance_Select.pdf'),'-dpdf','-fillpage')
+print('-f1',name1,'-dpdf','-fillpage')
+    movefile(name1,savelocation); 
