@@ -13,11 +13,11 @@ close all;
 % (should be in the file name typically)
 
 
-valuestr = inputdlg({'Enter File Name', 'Enter Channel Number', 'Enter Active Mass (mg)', 'Enter Number of Cycles per Rate'},'Input Values');
+valuestr = inputdlg({'Enter Filepath', 'Enter Channel Number', 'Enter Active Mass (mg)', 'Enter Number of Cycles per Rate'},'Input Values');
 values = str2double(valuestr);
+% enter full filepath in the dialogue box, or have the file in the same directory as the code file and use only file name
 
 filename = string(valuestr(1,:));
-
 channel = valuestr(2,:);
 sheet1 = strcat('Channel_',string(channel),'_1'); % Chooses main sheet
 sheet2 = strcat('Statistics_',string(channel)); % Chooses statistics sheet
