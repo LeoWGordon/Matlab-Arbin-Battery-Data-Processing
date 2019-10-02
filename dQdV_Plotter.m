@@ -31,7 +31,7 @@ ccc = a(:,5); % cycle index column
 
 n = max(ccc); % number of cycles
 
-    for i = (1:25:n) % Finds data for every 50th cycle, change 50 to change the step size
+    for i = (1:25:n) % Finds data for every 25th cycle, change second entry to change the step size
     
         cn = a(ccc==i,:); % Redefines the table according to the cycle corresponding to i
         si = cn(:,4); % finds the step indices
