@@ -8,7 +8,8 @@ clc;
 close all;
 clear all;
 
-valuestr = inputdlg({'Enter File Name','Enter Number of Cycles per Rate'},'Input Values'); 
+valuestr = inputdlg({'Enter Filepath','Enter Number of Cycles per Rate'},'Input Values'); 
+% enter full filepath in the dialogue box, or have the file in the same directory as the code file and use only file name
 
 filename = string(valuestr(1,:));
 f = str2double(valuestr(2,:));
