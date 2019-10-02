@@ -14,8 +14,8 @@ close all;
 % (should be in the file name typically)
 
 valuestr = inputdlg({'Enter Filepath','Enter Channel Number','Enter Current Density (mA/g)'},'Input Values'); 
-
-filename = string(valuestr(1,:)); % enter full filepath here, or have the file in the same directory as the code file
+% enter full filepath in the dialogue box, or have the file in the same directory as the code file and use only file name
+filename = string(valuestr(1,:)); 
 channel = valuestr(2,:);
 current_density_num = str2double(valuestr(3,:));
 
