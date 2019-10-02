@@ -7,7 +7,6 @@
 
 clc; 
 close all; 
- if 1
 clear all;
 
 valuestr = inputdlg({'Enter File Name','Enter Channel Number','Enter Current Density (mA/g)'},'Input Values'); 
@@ -19,8 +18,6 @@ current_density_num = str2double(valuestr(3,:));
 sheet1 = strcat('Channel_',string(channel),'_1');
 
 a = readmatrix(filename,'Sheet',sheet1);
-
- end
 
 %% Determine Mass of Active Material
 
