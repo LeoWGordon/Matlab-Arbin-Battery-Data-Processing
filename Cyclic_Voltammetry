@@ -8,10 +8,10 @@ clc;
 close all;
 clear all;
 
-valuestr = inputdlg({'Enter File Name','Enter Scan Rate (µV/s)'},'Input Values'); 
-
+valuestr = inputdlg({'Enter Filepath','Enter Scan Rate (µV/s)'},'Input Values'); 
+% enter full filepath in the dialogue box, or have the file in the same directory as the code file and use only file name
 filename = string(valuestr(1,:));
-rate = str2double(valuestr(3,:));
+rate = str2double(valuestr(2,:));
 
 a = readtable(filename);
 M = table2array(a);
