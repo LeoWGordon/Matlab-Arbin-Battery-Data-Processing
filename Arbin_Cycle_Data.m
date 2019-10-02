@@ -13,9 +13,9 @@ close all;
 % Input file name, and change number on the sheet names 
 % (should be in the file name typically)
 
-valuestr = inputdlg({'Enter File Name','Enter Channel Number','Enter Current Density (mA/g)'},'Input Values'); 
+valuestr = inputdlg({'Enter Filepath','Enter Channel Number','Enter Current Density (mA/g)'},'Input Values'); 
 
-filename = string(valuestr(1,:));
+filename = string(valuestr(1,:)); % enter full filepath here, or have the file in the same directory as the code file
 channel = valuestr(2,:);
 current_density_num = str2double(valuestr(3,:));
 
