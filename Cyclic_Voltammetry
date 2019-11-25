@@ -2,21 +2,24 @@
 % Gives graphs of voltage vs. current for all cycles
 % All graphs should save automatically into the folder specific by variable
 % savelocation.
+% Input scripts: saveloc.m, colourmapfigure.m, figure_param.m
 % Code prepared by Leo W. Gordon
 
 clc;
 close all;
 clear all;
 
-valuestr = inputdlg({'Enter Filepath','Enter Scan Rate (µV/s)'},'Input Values'); 
-% enter full filepath in the dialogue box, or have the file in the same directory as the code file and use only file name
+valuestr = inputdlg({'Enter File Name','Enter Scan Rate (µV/s)'},'Input Values'); 
+
 filename = string(valuestr(1,:));
 rate = str2double(valuestr(2,:));
 
 a = readtable(filename);
 M = table2array(a);
 
-area = pi*0.3^2;
+saveloc;
+%%
+area = pi*0.3^2; % 0.3 as the radius of the cathode (6 mm swagelok cells)
 
 cn = M(:,11);
 num_cycles = max(cn);
@@ -28,31 +31,32 @@ for i=(1:1:n)
     I = a1(:,10)/area;
     
     num = ['Cycle ', num2str(i)];
-    
-    plot(V,I,'linewidth',3,'DisplayName', num)
+    colourmapfigure
+    plot(V,I,'color',cmapfig(i,:),'linewidth',3,'DisplayName',num)%
     hold on
 end
 hold off
 %title(strcat('Cyclic Voltammograms at', '{ }', rate, '{ }','µV s^{-1}'),'fontsize',18)
-xlabel('Voltage (V)','fontsize',20,'FontWeight','bold')
-ylabel('Current Density (mA cm^{-2})','fontsize',20,'FontWeight','bold')
+xlabel('Voltage (V)')
+ylabel('Current Density (mA cm^{-2})')
 legend show
-legend('fontsize',16,'location','northwest')
-legend box 'off'
+lgd = legend('location','northwest');
 %grid on
 %grid minor
-box on
-ax = gca;
-size = ax.FontSize;
-ax.FontSize = 18;
-weight = ax.FontWeight;
-ax.FontWeight = 'bold';
-ax.LineWidth = 2;
+figure_param
 
+%%
 shortfilename = erase(filename,'.txt'); % remove .txt from the filename
-name = strcat(shortfilename,'_CV.pdf');
-savelocation = '/Users/lgordon/Documents/All Figures/'; % change to desired save location
+% name = strcat(shortfilename,'_CV.pdf');
+name = strcat(shortfilename,'_CV.png');
+% 
+% orient(figure(1),'landscape')
+% print('-f1',name,'-dpdf','-bestfit')
+%     movefile(name,savelocation);
 
 orient(figure(1),'landscape')
-print('-f1',name,'-dpdf','-bestfit')
+paper_settings_figure
+print('-f1',name,'-dpng','-r1000');
     movefile(name,savelocation);
+    
+    
