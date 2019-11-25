@@ -1,7 +1,7 @@
 %% Code for Processing Arbin Variable Rate Cycling Data
 % Gives graphs of the last cycle for every rate, and gives graph of
 % charge/discharge capacity and coulombic efficiency vs. cycle number
-% Calls input scripts: saveloc, figure_param, paper_settings_figure
+% Calls input scripts: saveloc, colourmapfigure, figure_param, paper_settings_figure
 % Code prepared by Leo W. Gordon
 
 clear all; 
