@@ -67,10 +67,10 @@ for j=1:1:length(Cycle_Number)
             eval(sprintf('c%d = cn%d(si%d==4,8)./m;',i,i,i)); % charge capacity discharge first
             eval(sprintf('Vc%d = cn%d(si%d==4,6);',i,i,i)); % charge voltage discharge first
         else
-            eval(sprintf('ds%d = cn%d(si%d==4,9)./m;',i,i,i)); % discharge capacity discharge first
-            eval(sprintf('Vd%d = cn%d(si%d==4,6);',i,i,i)); % discharge voltage discharge first
-            eval(sprintf('c%d = cn%d(si%d==2,8)./m;',i,i,i)); % charge capacity discharge first
-            eval(sprintf('Vc%d = cn%d(si%d==2,6);',i,i,i)); % charge voltage discharge first
+            eval(sprintf('ds%d = cn%d(si%d==4,9)./m;',i,i,i)); % discharge capacity charge first
+            eval(sprintf('Vd%d = cn%d(si%d==4,6);',i,i,i)); % discharge voltage charge first
+            eval(sprintf('c%d = cn%d(si%d==2,8)./m;',i,i,i)); % charge capacity charge first
+            eval(sprintf('Vc%d = cn%d(si%d==2,6);',i,i,i)); % charge voltage charge first
             pause
         end
     end
