@@ -8,14 +8,14 @@ clc;
 close all;
 clear all;
 
-valuestr = inputdlg({'Enter Filepath','Enter Number of Cycles per Rate'},'Input Values'); 
-% enter full filepath in the dialogue box, or have the file in the same directory as the code file and use only file name
+valuestr = inputdlg({'Enter File Name','Enter Number of Cycles per Rate'},'Input Values'); 
 
 filename = string(valuestr(1,:));
 f = str2double(valuestr(2,:));
 
 a = readtable(filename);
 M = table2array(a);
+saveloc;
 
 cn = M(:,11);
 num_cycles = max(cn);
@@ -44,26 +44,20 @@ end
 
 hold off
 % title('Variable Rate Cyclic Voltammograms','fontsize',18)
-xlabel('Voltage (V)','fontsize',20,'FontWeight','bold')
-ylabel('Current Density (mA cm^{-2})','fontsize',20,'FontWeight','bold')
-legend('fontsize',16,'location','northwest');
-legend box 'off'
+xlabel('Voltage (V)')
+ylabel('Current Density (mA cm^{-2})')
+legend('location','northwest');
 % grid on
 % grid minor
-box on
-ax = gca;
-size = ax.FontSize;
-ax.FontSize = 18;
-weight = ax.FontWeight;
-ax.FontWeight = 'bold';
-ax.LineWidth = 2;
+figure_param
 
 
 %% Save Files 
 shortfilename = erase(filename,'.txt'); % remove .txt from the filename
-name = strcat(shortfilename,'_CV.pdf');
-savelocation = '/Users/lgordon/Documents/All Figures/'; % change to desired save location
+% name = strcat(shortfilename,'_CV.pdf');
+name = strcat(shortfilename,'_CV.png');
 
 orient(figure(1),'landscape')
-print('-f1',name,'-dpdf','-bestfit')
+% print('-f1',name,'-dpdf','-bestfit')
+print('-f1',name,'-dpng','-r1000')
     movefile(name,savelocation);
