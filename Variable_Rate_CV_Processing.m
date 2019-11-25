@@ -2,6 +2,7 @@
 % Gives graphs of voltage vs. current for all cycles
 % All graphs should save automatically into the folder specific by variable
 % savelocation.
+% Input scripts: saveloc.m, figure_param.m
 % Code prepared by Leo W. Gordon
 
 clc;
